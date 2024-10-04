@@ -15,9 +15,39 @@ MyLittleOCR is a unified wrapper for several popular OCR libraries, providing a 
 
 Install MyLittleOCR using pip:
 
+To install the base package:
+
 ```bash
-pip install ml_ocr
+pip install my_little_ocr
 ```
+
+To install MyLittleOCR with specific OCR backends, use the following commands:
+
+- To install all supported OCR backends:
+  ```bash
+  pip install my_little_ocr[all]
+  ```
+- To install with Tesseract support:
+  ```bash
+  pip install my_little_ocr[tesseract]
+  ```
+- To install with EasyOCR support:
+  ```bash
+  pip install my_little_ocr[easyocr]
+  ```
+- To install with WeChat OCR support:
+  ```bash
+  pip install my_little_ocr[wechat_ocr]
+  ```
+- To install with Surya OCR support:
+  ```bash
+  pip install my_little_ocr[surya]
+  ```
+- To install with RapidOCR support:
+  ```bash
+  pip install my_little_ocr[rapidocr]
+  ```
+
 
 ## Supported OCR Libraries
 
@@ -47,8 +77,7 @@ pip install pytesseract
 The `TesseractEngine` class can be instantiated with the following optional parameters:
 
 - `tesseract_command`: Path to the Tesseract executable. If not provided, it attempts to find it automatically.
-- `default_langs`: A list of language codes or names. Default is `["eng", "chi_sim"]`.
-
+- `default_langs`: A list of language codes or names. Default is `['eng', 'chi_sim']`.
 
 > **Note**: You can use language names like 'English', 'eng', or 'en'. The program automatically converts them using the `iso639` library.
 
@@ -67,9 +96,8 @@ pip install easyocr
 
 The `EasyOCREngine` class accepts the following optional parameters:
 
-- `default_langs`: A list of language codes or names. Default is `["ch_sim", "en"]`.
+- `default_langs`: A list of language codes or names. Default is `['ch_sim', 'en']`.
 - Additional parameters supported by EasyOCR's `Reader` class (see [EasyOCR Documentation](https://www.jaided.ai/easyocr/documentation/)).
-
 
 ### WeChat OCR
 
@@ -86,7 +114,6 @@ pip install wechat_ocr
 
 The `WechatOCREngine` does not require additional optional parameters for instantiation.
 
-
 ### Surya
 
 - **License**: GPL 3.0
@@ -102,9 +129,8 @@ pip install surya-ocr
 
 The `SuryaEngine` class can be instantiated with the following optional parameters:
 
-- `default_langs`: A list of language codes or names. Default is `["en", "zh", "_math"]`.
+- `default_langs`: A list of language codes or names. Default is `['en', 'zh', '_math']`.
 - Additional parameters can be passed via `**kwargs`.
-
 
 ### RapidOCR
 
@@ -121,8 +147,8 @@ pip install rapidocr_onnxruntime
 
 The `RapidOCREngine` class accepts the following optional parameters:
 
-- `det_model`: Detection model path or name. Default is `"ch_PP-OCRv4_det_infer.onnx"`.
-- `rec_model`: Recognition model path or name. Default is `"ch_PP-OCRv4_rec_infer.onnx"`.
+- `det_model`: Detection model path or name. Default is `'ch_PP-OCRv4_det_infer.onnx'`.
+- `rec_model`: Recognition model path or name. Default is `'ch_PP-OCRv4_rec_infer.onnx'`.
 - Additional parameters supported by `RapidOCR` (see [RapidOCR API Documentation](https://rapidai.github.io/RapidOCRDocs/install_usage/api/RapidOCR/)).
 
 > **Note**: The models will be automatically downloaded if not present. You can specify custom model paths as needed.
@@ -150,10 +176,28 @@ There are two main ways to interact with the API in MyLittleOCR:
 
 ### 1. Engine Management-Based API Interaction
 
+- **Get Engine Instance**: Use `get_engine_instance(engine_name, **kwargs)` to get an instance of a specific OCR engine with optional parameters.
+
+  ```python
+  from my_little_ocr import get_engine_instance
+
+  engine_instance = get_engine_instance('easyocr')
+  result = engine_instance.ocr('/path/to/image.jpg')
+  print(result.to_list())
+  ```
+
+- **Get Engine Class**: Use `get_engine_class(engine_name)` to get the class of a specific OCR engine.
+
+  ```python
+  from my_little_ocr import get_engine_class
+
+  EasyOCREngine = get_engine_class('easyocr')
+  engine_instance = EasyOCREngine()
+  ```
 - **Get All Engines**: Use `get_all_engines()` to retrieve all registered OCR engines.
 
   ```python
-  from ocr_engines import get_all_engines
+  from my_little_ocr import get_all_engines
 
   engines = get_all_engines()
   for engine_name, engine_class in engines.items():
@@ -163,40 +207,27 @@ There are two main ways to interact with the API in MyLittleOCR:
       print(result.to_list())
   ```
 
-- **Get Engine Instance**: Use `get_engine_instance(engine_name, **kwargs)` to get an instance of a specific OCR engine with optional parameters.
-
-  ```python
-  from ocr_engines import get_engine_instance
-
-  engine_instance = get_engine_instance('easyocr')
-  ```
-
-- **Get Engine Class**: Use `get_engine_class(engine_name)` to get the class of a specific OCR engine.
-
-  ```python
-  from ocr_engines import get_engine_class
-
-  EasyOCREngine = get_engine_class('easyocr')
-  ```
 
 ### 2. Direct Import from Specific Library
 
 Directly import the engine class from the specific OCR engine module, then instantiate and use it.
 
 ```python
-from ocr_engines.easyocr_engine import EasyOCREngine
+from my_little_ocr.ocr_engines.easyocr_engine import EasyOCREngine
 
 engine_instance = EasyOCREngine(
     default_langs=['English', 'Korean'],
     gpu=False
 )
+result = engine_instance.ocr('/path/to/image.jpg')
+print(result.to_list())
 ```
 
 ## Working with OCR Results
 
 The `OCRResult` class represents OCR results and provides methods to process and filter them.
 
-### Initialization
+### Example
 
 Create an `OCRResult` instance by providing a list of `OCRItem` instances.
 
@@ -294,5 +325,5 @@ And all the OCR libraries mentioned above.
 
 ## Credits
 
-
 Thanks to all the contributors and maintainers of the OCR libraries that were used in this project.
+
