@@ -93,3 +93,14 @@ class RapidOCREngine(BaseOCREngine):
         for line in _result:
             result.append(OCRItem(text=line[1], confidence=line[2], box=line[0]))
         return OCRResult(ocr_items=result)
+
+from src.engine_config import EngineConfig, register_engine
+
+engine_config = EngineConfig(
+    engine_name="rapidocr",
+    engine_class=RapidOCREngine,
+    project_url="https://github.com/RapidAI/RapidOCR"
+)
+
+
+register_engine(engine_config)

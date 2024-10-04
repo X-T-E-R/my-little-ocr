@@ -5,7 +5,6 @@ import numpy as np
 from src.img_utils import ImageLike, convert_imagelike_to_type
 import json
 
-
 class OCRItem(BaseModel):
     """
     Represents an OCR item containing text and its location.
@@ -13,7 +12,7 @@ class OCRItem(BaseModel):
 
     text: str = Field(..., description="The text content of the OCR item")
     # 4 points, each represented as a list of 2 integers
-    polygon: Optional[list[list[int]]] = Field(
+    box: Optional[list[list[int]]] = Field(
         None,
         description="The position of the OCR item in the image, represented as a list of 4 points",
     )
@@ -21,7 +20,7 @@ class OCRItem(BaseModel):
         None, description="The confidence score of the OCR item"
     )
 
-    @field_validator("polygon", mode="before")
+    @field_validator("box", mode="before")
     def convert_float_to_int(cls, v):
         if v is not None:
             # Ensure all coordinates are rounded to nearest integer, handling NumPy types as well
@@ -76,25 +75,28 @@ class OCRResult(BaseModel):
             ]
         )
 
-    def to_str_list(self) -> list[str]:
+    def to_list(self, text_only: bool = False) -> list:
         """
         Converts the OCR result to a list of strings.
         """
-        return [item.text for item in self.ocr_items]
+        if text_only:
+            return [item.text for item in self.ocr_items]
+        else:
+            return [item.dict() for item in self.ocr_items]
 
     def to_string(self, separator: str = " ") -> str:
         """
         Converts the OCR result to a string.
         """
-        return separator.join(self.to_str_list())
+        return separator.join(self.to_list(text_only=True))
 
-    def to_json(self, **kwargs) -> str:
+    def to_json(self, text_only: bool = False, **kwargs) -> str:
         """
         Converts the OCR result to a JSON string.
         """
         kwargs["ensure_ascii"] = False
         return json.dumps(
-            [item.dict() for item in self.ocr_items], **kwargs
+            self.to_list(text_only=text_only), **kwargs
         )
 
 

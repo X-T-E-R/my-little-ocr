@@ -53,16 +53,18 @@ class TesseractEngine(BaseOCREngine):
             ocr_item = OCRItem(
                 text=text,
                 confidence=confidence,
-                polygon=[[left, top], [left + width, top], [left + width, top + height], [left, top + height]]
+                box=[[left, top], [left + width, top], [left + width, top + height], [left, top + height]]
             )
             result.append(ocr_item)
         return OCRResult(ocr_items=result)
 
 
-from src.engine_config import EngineConfig
+from src.engine_config import EngineConfig, register_engine
 
 engine_config = EngineConfig(
     engine_name="tesseract",
     engine_class=TesseractEngine,
     project_url="https://github.com/madmaze/pytesseract"
 )
+
+register_engine(engine_config)  

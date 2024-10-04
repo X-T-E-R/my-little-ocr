@@ -69,7 +69,7 @@ class SuryaEngine(BaseOCREngine):
         for line in text_lines:
             result.append(
                 OCRItem(
-                    text=line.text, polygon=line.polygon, confidence=line.confidence
+                    text=line.text, box=line.polygon, confidence=line.confidence
                 )
             )
         return OCRResult(ocr_items=result)

@@ -8,10 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
-dynaconf = "^3.2.6"
 pydantic = "^2.9.2"
-toml = "^0.10.2"
-pytest = "^8.3.3"
 numpy = "<2.0"
 gitpython = "^3.1.43"
 iso639-lang = "^2.4.2"

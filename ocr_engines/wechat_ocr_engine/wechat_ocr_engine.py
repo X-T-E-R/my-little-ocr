@@ -56,7 +56,7 @@ class WechatOCREngine(BaseOCREngine):
             position = [[left, top], [right, top], [right, bottom], [left, bottom]]
             score = item_dict.get("score")
             ocr_item = OCRItem(
-                text=item_dict["text"], polygon=position, confidence=score
+                text=item_dict["text"], box=position, confidence=score
             )
             ocr_item_list.append(ocr_item)
 

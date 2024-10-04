@@ -6,8 +6,6 @@ class EngineConfig(BaseModel):
     engine_name: str
     engine_class: Type[BaseOCREngine]
     project_url: Optional[str] = None
-    default_params: Dict[str, Any] = Field(default_factory=dict)
-
 
 engines: Dict[str, EngineConfig] = {}
 

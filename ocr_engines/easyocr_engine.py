@@ -58,7 +58,7 @@ class EasyOCREngine(BaseOCREngine):
         img = convert_imagelike_to_type(img, "numpy")
         result = self.reader.readtext(img, **kwargs)
         return OCRResult(ocr_items=[
-            OCRItem(text=item[1], confidence=item[2], polygon=item[0])
+            OCRItem(text=item[1], confidence=item[2], box=item[0])
             for item in result
         ])
 
