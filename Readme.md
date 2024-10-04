@@ -158,10 +158,10 @@ The `RapidOCREngine` class accepts the following optional parameters:
 Here's an example of how to use the MyLittleOCR API to extract text from an image:
 
 ```python
-from ocr_engines import get_engine_class
+from my_little_ocr import get_engine_instance
 
 # Get an instance of the desired OCR engine (e.g., 'tesseract', 'easyocr', 'paddleocr', 'wechat_ocr', 'surya', 'rapidocr')
-ocr_engine = get_engine_class('tesseract')
+ocr_engine = get_engine_instance('rapidocr')
 
 # Extract text from an image
 ocr_result = ocr_engine.ocr('/path/to/image.jpg')
