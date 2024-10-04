@@ -12,7 +12,16 @@ pydantic = "^2.9.2"
 numpy = "<2.0"
 gitpython = "^3.1.43"
 iso639-lang = "^2.4.2"
+opencv-python = "^4.10.0.84"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.extras]
+tesseract = ["pytesseract"]
+easyocr = ["easyocr"]
+wechat_ocr = ["wechat_ocr"]
+surya = ["surya-ocr"]
+rapidocr = ["rapidocr_onnxruntime"]
+all = ["pytesseract", "easyocr", "wechat_ocr", "surya-ocr", "rapidocr_onnxruntime"]
