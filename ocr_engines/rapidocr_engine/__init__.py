@@ -1,0 +1,1 @@
+from .rapidocr_engine import *

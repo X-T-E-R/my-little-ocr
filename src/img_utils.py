@@ -1,53 +1,13 @@
-from abc import ABC, abstractmethod
-from typing import  Optional
-from pydantic import BaseModel, Field, field_validator
-import numpy as np
-from typing import Union, Literal
-from PIL import Image
+
+from typing import Literal, Union
 from os import PathLike
-from io import BytesIO
-import cv2  # OpenCV
+from PIL import Image
+import numpy as np
+import cv2
 import tempfile
+from io import BytesIO
 
 ImageLike = Union[str, bytes, np.ndarray, Image.Image, PathLike]
-
-class OCRItem(BaseModel):
-    """
-    Represents an OCR item containing text and its location.
-    """
-    text: str = Field(..., description="The text content of the OCR item")
-    # 4 points, each represented as a list of 2 integers
-    position: Optional[list[list[int]]] = Field(None, description="The position of the OCR item in the image, represented as a list of 4 points")
-    score: Optional[float] = Field(None, description="The confidence score of the OCR item")
-
-    @field_validator('position', mode='before')
-    def convert_float_to_int(cls, v):
-        if v is not None:
-            # Ensure all coordinates are rounded to nearest integer, handling NumPy types as well
-            return [[round(coord) if isinstance(coord, (float, np.floating)) else int(coord) for coord in point] for point in v]
-        return v
-
-class BaseOCREngine(ABC):
-    """
-    Abstract base class for OCR engines.
-    """
-
-    ocr_engine_name: str = "Base OCR Engine"
-
-
-    @abstractmethod
-    def ocr(self, img: ImageLike) -> list[OCRItem]:
-        """
-        Performs OCR on the given image path synchronously.
-
-        Args:
-            img (ImageLike): The image to perform OCR on.
-
-        Returns:
-            Any: The OCR result.
-        """
-        pass
-
 
 def convert_imagelike_to_type(img: ImageLike, type: Literal["filepath", "numpy", "pil"]) -> Union[str, np.ndarray, Image.Image]:
     """

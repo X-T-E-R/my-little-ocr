@@ -48,7 +48,7 @@ class OcrManager(XPluginManager):
     m_id_path:Dict[int, str] = {}
     m_usr_lib_dir: str = None
     m_wechatocr_running: bool = False
-    m_connect_state:Value = Value('b', False)
+    m_connect_state = Value('b', False)
     m_usr_callback: Callable = None
 
     def __init__(self, wechat_path) -> None:
@@ -115,7 +115,7 @@ class OcrManager(XPluginManager):
         task_id = ocr_response.task_id
         if not self.m_id_path.get(task_id):
             return
-        #print(f"收到识别结果, task_id: {task_id}, result: {json_response}")
+        # print(f"收到识别结果, task_id: {task_id}, result: {json_response_str}")
         pic_path = self.m_id_path[task_id]
         if self.m_usr_callback:
             self.m_usr_callback(pic_path, self.parse_json_response(json_response_str))

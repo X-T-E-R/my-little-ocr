@@ -1,40 +1,41 @@
-from .base_ocr_engine import (
-    BaseOCREngine,
-    OCRItem,
-)
+from src.engine_config import get_engine as get_engine_after_register
+from src.base_ocr_engine import BaseOCREngine
+import importlib
+from typing import Type
+from pathlib import Path
 
-from .wechat_ocr.wechat_ocr_engine import WechatOCREngine
-# from .tesseract_ocr_engine import TesseractOCREngine
-# from .paddle_ocr_engine import PaddleOCREngine
-from src.config import ocr_settings
-from typing import Callable
+engine_instances :dict[str, BaseOCREngine] = {}
 
-ocr_engine_class_map = {
-    "wechat_ocr": WechatOCREngine,
-    # "tesseract_ocr": TesseractOCREngine,
-    # "paddle_ocr": PaddleOCREngine,
-}
-
-Undefined = object()
+def deal_with_engine_name(engine_name: str) -> str:
+    engine_name_with_engine = engine_name if engine_name.endswith("_engine") else engine_name + "_engine"
+    engine_name = engine_name_with_engine.replace("_engine", "")
+    return engine_name, engine_name_with_engine
 
 
-class OCREngineFactory:
-    _instances = {}
+def get_engine_class(engine_name: str) -> Type[BaseOCREngine]:
+    engine_name, engine_name_with_engine = deal_with_engine_name(engine_name)
+    importlib.import_module(f"ocr_engines.{engine_name_with_engine}")
+    return get_engine_after_register(engine_name).engine_class
 
-    @staticmethod
-    def init_engine(
-        engine_name: str,
-    ) -> BaseOCREngine:
-        if engine_name not in OCREngineFactory._instances:
-            Engine_Class = ocr_engine_class_map.get(engine_name)
-            if Engine_Class is None:
-                raise ValueError(f"Invalid engine_name '{engine_name}' provided")
-            OCREngineFactory._instances[engine_name] = Engine_Class(
-                **ocr_settings.engine_configs.get(engine_name, {})
-            )
-        return OCREngineFactory._instances[engine_name]
+def get_engine_instance(engine_name: str) -> BaseOCREngine:
+    engine_name, engine_name_with_engine = deal_with_engine_name(engine_name)
+    engine_class = get_engine_class(engine_name)
+    if engine_name_with_engine in engine_instances:
+        return engine_instances[engine_name_with_engine]
+    engine_instances[engine_name_with_engine] = engine_class()
+    return engine_instances[engine_name_with_engine]
 
+def get_all_engines():
+    result: dict[str, Type[BaseOCREngine]] = {}
+    for file_or_folder in Path(__file__).parent.iterdir():
+        try:
+            stem = file_or_folder.stem
+            if stem.endswith("_engine"):
+                engine_name = stem[:-7]
+                engine_class = get_engine_class(engine_name)
+                result[engine_name] = engine_class
+        except Exception as e:
+            print(f"Error: {e}")
+    return result
 
-get_ocr_engine = OCREngineFactory.init_engine
-
-# ocr_engine = get_ocr_engine(ocr_settings.engine)
+__all__ = ["get_engine_instance", "get_all_engines",  "get_engine_class"]

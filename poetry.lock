@@ -255,6 +255,27 @@ files = [
 ]
 
 [[package]]
+name = "iso639"
+version = "0.1.4"
+description = "ISO639-2 support for Python."
+optional = false
+python-versions = "*"
+files = [
+    {file = "iso639-0.1.4.tar.gz", hash = "sha256:88b70cf6c64ee9c2c2972292818c8beb32db9ea6f4de1f8471a9b081a3d92e98"},
+]
+
+[[package]]
+name = "iso639-lang"
+version = "2.4.2"
+description = "A fast, simple ISO 639 library."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "iso639_lang-2.4.2-py3-none-any.whl", hash = "sha256:971708b4ab2b149da1aa519c48e62ceb450548311409d28859bd4cb1cb37a011"},
+    {file = "iso639_lang-2.4.2.tar.gz", hash = "sha256:f1bbed6a80bb177e54b02f9eba0e4900d21475bc720158c7ec7c493a31a8d612"},
+]
+
+[[package]]
 name = "jinja2"
 version = "3.1.4"
 description = "A very fast and expressive template engine."
@@ -1676,4 +1697,4 @@ protobuf = "3.20.3"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "d9e38039d18b01920f96401f3abe6915dec6782d6b2bb5439acd7f1a6fc56fe6"
+content-hash = "773532abddb5e5e5111b7c9afa73c71a4af104897cbd3d32b041f2f44cc854c8"
