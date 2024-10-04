@@ -1,4 +1,4 @@
-from src.engine_config import EngineConfig, register_engine
+from my_little_ocr.base_engine.engine_config import EngineConfig, register_engine
 from .wechat_ocr_engine import WechatOCREngine
 
 engine_config = EngineConfig(

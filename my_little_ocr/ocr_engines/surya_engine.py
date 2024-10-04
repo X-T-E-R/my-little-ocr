@@ -8,7 +8,7 @@ from surya.model.recognition.model import load_model as load_rec_model
 from surya.model.recognition.processor import load_processor as load_rec_processor
 
 from iso639 import Lang
-from src.base_ocr_engine import (
+from my_little_ocr.base_engine.base_ocr_engine import (
     BaseOCREngine,
     OCRItem,
     ImageLike,
@@ -75,7 +75,7 @@ class SuryaEngine(BaseOCREngine):
         return OCRResult(ocr_items=result)
 
 
-from src.engine_config import EngineConfig, register_engine
+from my_little_ocr.base_engine.engine_config import EngineConfig, register_engine
 
 engine_config = EngineConfig(
     engine_name="surya",

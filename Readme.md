@@ -201,7 +201,7 @@ The `OCRResult` class represents OCR results and provides methods to process and
 Create an `OCRResult` instance by providing a list of `OCRItem` instances.
 
 ```python
-from src.base_ocr_engine import OCRResult, OCRItem
+from my_little_ocr.base_engine.base_ocr_engine import OCRResult, OCRItem
 
 ocr_items = [
     OCRItem(
@@ -296,7 +296,3 @@ And all the OCR libraries mentioned above.
 
 
 Thanks to all the contributors and maintainers of the OCR libraries that were used in this project.
-
----
-
-*Updated the README to include optional parameters for OCR engines, provided examples of how to instantiate engines with these parameters, and added acknowledgments for the libraries used.*

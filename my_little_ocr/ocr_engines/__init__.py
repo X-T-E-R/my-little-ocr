@@ -1,5 +1,5 @@
-from src.engine_config import get_engine as get_engine_after_register
-from src.base_ocr_engine import BaseOCREngine
+from my_little_ocr.base_engine.engine_config import get_engine as get_engine_after_register
+from my_little_ocr.base_engine.base_ocr_engine import BaseOCREngine
 import importlib
 from typing import Type
 from pathlib import Path
@@ -14,7 +14,7 @@ def deal_with_engine_name(engine_name: str) -> str:
 
 def get_engine_class(engine_name: str) -> Type[BaseOCREngine]:
     engine_name, engine_name_with_engine = deal_with_engine_name(engine_name)
-    importlib.import_module(f"ocr_engines.{engine_name_with_engine}")
+    importlib.import_module(f"my_little_ocr.ocr_engines.{engine_name_with_engine}")
     return get_engine_after_register(engine_name).engine_class
 
 def get_engine_instance(engine_name: str) -> BaseOCREngine:

@@ -1,4 +1,4 @@
-from src.base_ocr_engine import (
+from my_little_ocr.base_engine.base_ocr_engine import (
     BaseOCREngine,
     OCRItem,
     OCRResult,
@@ -63,7 +63,7 @@ class EasyOCREngine(BaseOCREngine):
         ])
 
 
-from src.engine_config import EngineConfig, register_engine
+from my_little_ocr.base_engine.engine_config import EngineConfig, register_engine
 
 engine_config = EngineConfig(
     engine_name="easyocr",

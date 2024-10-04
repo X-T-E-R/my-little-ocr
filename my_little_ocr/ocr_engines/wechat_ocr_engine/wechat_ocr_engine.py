@@ -1,7 +1,7 @@
 from .wechat_ocr_modified_lib import OcrManager
 from pydantic import BaseModel, Field, field_validator
 from typing import Callable
-from src.base_ocr_engine import (
+from my_little_ocr.base_engine.base_ocr_engine import (
     BaseOCREngine,
     OCRItem,
     convert_imagelike_to_type,

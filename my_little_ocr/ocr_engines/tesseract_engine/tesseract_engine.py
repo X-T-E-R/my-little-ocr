@@ -1,4 +1,4 @@
-from src.base_ocr_engine import BaseOCREngine, OCRResult, OCRItem, ImageLike, convert_imagelike_to_type
+from my_little_ocr.base_engine.base_ocr_engine import BaseOCREngine, OCRResult, OCRItem, ImageLike, convert_imagelike_to_type
 from PIL import Image
 import pytesseract
 import numpy as np
@@ -59,7 +59,7 @@ class TesseractEngine(BaseOCREngine):
         return OCRResult(ocr_items=result)
 
 
-from src.engine_config import EngineConfig, register_engine
+from my_little_ocr.base_engine.engine_config import EngineConfig, register_engine
 
 engine_config = EngineConfig(
     engine_name="tesseract",

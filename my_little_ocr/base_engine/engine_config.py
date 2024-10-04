@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from src.base_ocr_engine import BaseOCREngine
+from .base_ocr_engine import BaseOCREngine
 from typing import Type, Dict, Any, Optional, Callable
 
 class EngineConfig(BaseModel):

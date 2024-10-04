@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Optional
 from pydantic import BaseModel, Field, field_validator
 import numpy as np
-from src.img_utils import ImageLike, convert_imagelike_to_type
+from .img_utils import ImageLike, convert_imagelike_to_type
 import json
 
 class OCRItem(BaseModel):

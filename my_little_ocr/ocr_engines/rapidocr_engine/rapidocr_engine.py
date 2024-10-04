@@ -1,7 +1,7 @@
 from typing import Literal
 from rapidocr_onnxruntime import RapidOCR
 from pathlib import Path
-from src.base_ocr_engine import (
+from my_little_ocr.base_engine.base_ocr_engine import (
     BaseOCREngine,
     OCRItem,
     OCRResult,
@@ -94,7 +94,7 @@ class RapidOCREngine(BaseOCREngine):
             result.append(OCRItem(text=line[1], confidence=line[2], box=line[0]))
         return OCRResult(ocr_items=result)
 
-from src.engine_config import EngineConfig, register_engine
+from my_little_ocr.base_engine.engine_config import EngineConfig, register_engine
 
 engine_config = EngineConfig(
     engine_name="rapidocr",
